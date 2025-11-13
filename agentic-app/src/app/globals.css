@@ -1,0 +1,534 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.scene {
+  position: relative;
+  width: min(92vw, 420px);
+  aspect-ratio: 9 / 16;
+  border-radius: 36px;
+  border: 12px solid rgba(255, 245, 227, 0.9);
+  background: radial-gradient(circle at 50% 25%, rgba(255, 246, 212, 0.95), rgba(255, 203, 198, 0.55) 45%, rgba(147, 196, 255, 0.65) 80%);
+  box-shadow: 0 32px 80px rgba(55, 60, 90, 0.35);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.scene__backlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(255, 226, 200, 0.55), transparent 55%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+}
+
+.scene__sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #d9eaff 0%, #fbe8ff 45%, #ffe6d6 100%);
+}
+
+.scene__sun {
+  position: absolute;
+  top: 14%;
+  left: 22%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 245, 214, 0.95), rgba(255, 197, 135, 0.4));
+  box-shadow: 0 0 60px 20px rgba(255, 211, 150, 0.55);
+  filter: blur(0.5px);
+}
+
+.scene__cloud {
+  position: absolute;
+  width: 120px;
+  height: 48px;
+  border-radius: 50px;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+  filter: blur(1px);
+  opacity: 0.7;
+}
+
+.scene__cloud::before,
+.scene__cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.scene__cloud::before {
+  width: 70px;
+  height: 70px;
+  top: -22px;
+  left: 18px;
+}
+
+.scene__cloud::after {
+  width: 60px;
+  height: 60px;
+  top: -20px;
+  right: 15px;
+}
+
+.scene__cloud--left {
+  top: 20%;
+  left: 12%;
+}
+
+.scene__cloud--right {
+  top: 32%;
+  right: 14%;
+}
+
+.scene__window {
+  position: absolute;
+  inset: 8%;
+  border-radius: 26px;
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.scene__frame {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 2px 6px rgba(143, 115, 95, 0.35);
+}
+
+.scene__frame--left,
+.scene__frame--right {
+  top: 0;
+  width: 8px;
+  height: 100%;
+}
+
+.scene__frame--left {
+  left: 0;
+}
+
+.scene__frame--right {
+  right: 0;
+}
+
+.scene__frame--top,
+.scene__frame--bottom {
+  left: 0;
+  width: 100%;
+  height: 8px;
+}
+
+.scene__frame--top {
+  top: 0;
+}
+
+.scene__frame--bottom {
+  bottom: 0;
+}
+
+.scene__frameBar {
+  position: absolute;
+  background: rgba(222, 203, 182, 0.8);
+  box-shadow: inset 0 0 4px rgba(99, 74, 56, 0.25);
+}
+
+.scene__frameBar--vertical {
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scene__frameBar--horizontal {
+  left: 0;
+  right: 0;
+  height: 9px;
+  bottom: 32%;
+}
+
+.child {
+  position: absolute;
+  bottom: 12%;
+  left: 20%;
+  width: 46%;
+  height: 46%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  filter: drop-shadow(0 12px 22px rgba(39, 31, 20, 0.25));
+}
+
+.child__body {
+  position: relative;
+  width: 72%;
+  height: 68%;
+  background: linear-gradient(180deg, #f5b39d 0%, #f09174 60%, #d4735f 100%);
+  border-radius: 38% 42% 15% 15%;
+}
+
+.child__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 25%, rgba(255, 220, 216, 0.6), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.child__collar {
+  position: absolute;
+  width: 68%;
+  height: 28%;
+  left: 50%;
+  top: -14%;
+  transform: translateX(-50%);
+  border-radius: 60% 60% 30% 30%;
+  background: linear-gradient(180deg, rgba(255, 219, 190, 0.85), rgba(255, 195, 151, 0.6));
+  box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4);
+}
+
+.child__arm {
+  position: absolute;
+  width: 32%;
+  height: 60%;
+  right: -18%;
+  bottom: 34%;
+  background: linear-gradient(180deg, #f0ba92 0%, #d69464 100%);
+  border-radius: 50% 50% 30% 30%;
+  transform: rotate(-18deg);
+  transform-origin: bottom left;
+  animation: farewellWave 5s ease-in-out infinite;
+}
+
+.child__hand {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  top: -18px;
+  right: -4px;
+  border-radius: 60% 40% 50% 50%;
+  background: linear-gradient(180deg, #f5c59d, #e4a77a);
+  box-shadow: inset -6px -4px 10px rgba(179, 99, 64, 0.25);
+}
+
+.child__head {
+  position: absolute;
+  width: 110px;
+  height: 120px;
+  border-radius: 46% 44% 48% 42%;
+  background: radial-gradient(circle at 40% 35%, #f3c49b, #d9966d 72%);
+  left: 2%;
+  top: -22%;
+  box-shadow: inset -8px -6px 16px rgba(158, 90, 52, 0.32);
+}
+
+.child__eye {
+  position: absolute;
+  top: 44%;
+  width: 26px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.9), rgba(123, 162, 210, 0.7));
+  box-shadow: 0 0 6px rgba(88, 144, 203, 0.35);
+}
+
+.child__eye--left {
+  left: 24%;
+}
+
+.child__eye--right {
+  right: 20%;
+}
+
+.child__pupil {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.7), rgba(33, 56, 92, 0.9));
+  box-shadow: inset -2px -4px 6px rgba(0, 0, 0, 0.35);
+  animation: pupilShimmer 4.2s ease-in-out infinite;
+}
+
+.child__pupil--left {
+  left: 30%;
+}
+
+.child__pupil--right {
+  right: 26%;
+}
+
+.child__tear {
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  border-radius: 50% 50% 50% 60%;
+  background: radial-gradient(circle at 40% 30%, rgba(179, 220, 255, 0.85), rgba(67, 138, 202, 0.65));
+  filter: blur(0.4px);
+  animation: tearShimmer 3.8s ease-in-out infinite;
+}
+
+.child__tear--left {
+  left: 26%;
+  top: 58%;
+}
+
+.child__tear--right {
+  right: 22%;
+  top: 60%;
+}
+
+.child__cheek {
+  position: absolute;
+  width: 42px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 182, 172, 0.6), rgba(255, 182, 172, 0));
+  filter: blur(0.8px);
+  opacity: 0.85;
+}
+
+.child__cheek--left {
+  left: 18%;
+  top: 58%;
+}
+
+.child__cheek--right {
+  right: 16%;
+  top: 60%;
+}
+
+.child__hair {
+  position: absolute;
+  background: linear-gradient(180deg, #3a2a1d 0%, #1f140f 100%);
+  border-radius: 60% 40% 10% 90%;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.child__hair--left {
+  width: 60px;
+  height: 40px;
+  top: 10%;
+  left: 4%;
+  transform: rotate(-12deg);
+}
+
+.child__hair--right {
+  width: 58px;
+  height: 38px;
+  top: 8%;
+  right: -6%;
+  transform: rotate(16deg);
+}
+
+.child__hair--crown {
+  width: 74px;
+  height: 48px;
+  top: -4%;
+  left: 16%;
+  border-radius: 50% 50% 30% 30%;
+  clip-path: polygon(0% 78%, 14% 24%, 32% 58%, 48% 16%, 66% 60%, 82% 14%, 100% 72%, 70% 100%, 32% 100%);
+}
+
+.parrot {
+  position: absolute;
+  top: 26%;
+  right: 18%;
+  width: 120px;
+  height: 86px;
+  border-radius: 50% 45% 48% 46%;
+  background: linear-gradient(120deg, #37b24d 0%, #28a745 45%, #1f78d1 84%);
+  box-shadow: inset -12px -14px 24px rgba(16, 72, 55, 0.45);
+  transform: rotate(8deg);
+  animation: parrotFloat 6s ease-in-out infinite;
+}
+
+.parrot__wing {
+  position: absolute;
+  width: 120px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(51, 163, 92, 0.75), rgba(16, 94, 153, 0.05));
+  filter: blur(3px);
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  transform-origin: 20% 80%;
+}
+
+.parrot__wing--left {
+  left: -40px;
+  top: -24px;
+  transform: rotate(-26deg);
+  animation: wingBeatLeft 1.8s ease-in-out infinite;
+}
+
+.parrot__wing--right {
+  right: -34px;
+  top: -14px;
+  transform: rotate(18deg);
+  animation: wingBeatRight 1.8s ease-in-out infinite;
+}
+
+.parrot__tail {
+  position: absolute;
+  bottom: -32px;
+  right: 16px;
+  width: 70px;
+  height: 120px;
+  background: linear-gradient(160deg, rgba(30, 120, 210, 0.95), rgba(20, 76, 150, 0));
+  border-radius: 40% 40% 90% 90%;
+  transform: rotate(18deg);
+  filter: blur(1.6px);
+}
+
+.parrot__beak {
+  position: absolute;
+  width: 28px;
+  height: 24px;
+  right: -18px;
+  top: 42%;
+  border-radius: 50% 50% 10% 90%;
+  background: radial-gradient(circle at 30% 40%, #ffb1a4 0%, #e9332b 65%, #8c1512 100%);
+  box-shadow: 0 0 18px rgba(233, 70, 50, 0.8);
+}
+
+.parrot__eye {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 14px;
+  top: 38%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #cfe8ff 40%, #2054a4 80%);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.scene__dust {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 247, 232, 0.7);
+  filter: blur(0.6px);
+  animation: dustFloat 8s ease-in-out infinite;
+}
+
+.scene__dust--1 {
+  left: 18%;
+  top: 46%;
+  animation-delay: 0.2s;
+}
+
+.scene__dust--2 {
+  left: 46%;
+  top: 52%;
+  animation-delay: 1s;
+}
+
+.scene__dust--3 {
+  right: 26%;
+  top: 62%;
+  animation-delay: 1.8s;
+}
+
+.scene__dust--4 {
+  right: 12%;
+  top: 40%;
+  animation-delay: 2.6s;
+}
+
+@keyframes parrotFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes wingBeatLeft {
+  0%,
+  100% {
+    transform: rotate(-26deg) scaleX(1);
+  }
+  50% {
+    transform: rotate(-10deg) scaleX(1.08);
+  }
+}
+
+@keyframes wingBeatRight {
+  0%,
+  100% {
+    transform: rotate(18deg) scaleX(1);
+  }
+  50% {
+    transform: rotate(34deg) scaleX(0.96);
+  }
+}
+
+@keyframes farewellWave {
+  0%,
+  100% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes dustFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(0, -16px, 0);
+    opacity: 0.4;
+  }
+}
+
+@keyframes tearShimmer {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(2px) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes pupilShimmer {
+  0%,
+  100% {
+    transform: translateY(-2px) scale(1);
+  }
+  50% {
+    transform: translateY(0) scale(1.05);
+  }
+}
